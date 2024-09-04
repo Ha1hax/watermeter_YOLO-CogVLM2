@@ -22,7 +22,7 @@ if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
 logging.basicConfig(
-    filename=os.path.join(log_dir, '0-9.log'),
+    filename=os.path.join(log_dir, '0904_0-9.log'),
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
@@ -39,13 +39,37 @@ def preprocess_boxes(xyxy, cls, conf, img_size):
 
     return boxes, cls, conf
 
+# def generate_possible_readings(digit):
+#     if digit == 7.5:
+#         return [7, 8]
+#     elif digit == 9.5:
+#         return [9, 0]
+#     else:
+#         return [int(digit)]
 def generate_possible_readings(digit):
-    if digit == 7.5:
+    if digit == 0.5:
+        return [0, 1]
+    elif digit == 1.5:
+        return [1, 2]
+    elif digit == 2.5:
+        return [2, 3]
+    elif digit == 3.5:
+        return [3, 4]
+    elif digit == 4.5:
+        return [4, 5]
+    elif digit == 5.5:
+        return [5, 6]
+    elif digit == 6.5:
+        return [6, 7]
+    elif digit == 7.5:
         return [7, 8]
+    elif digit == 8.5:
+        return [8, 9]
     elif digit == 9.5:
         return [9, 0]
     else:
         return [int(digit)]
+
 
 def combine_readings(cls):
     yolo_class_map = {
@@ -152,5 +176,5 @@ def process_images_in_folder(folder_path, output_csv):
 
 if __name__ == "__main__":
     folder_path = "/home/zy/1.Code/new_water_meter_recognition/data/0-9_4-6"  # 替换为你实际的图片文件夹路径
-    output_csv = os.path.join(log_dir, '0-9.csv')
+    output_csv = os.path.join(log_dir, '0904_0-9.csv')
     process_images_in_folder(folder_path, output_csv)
