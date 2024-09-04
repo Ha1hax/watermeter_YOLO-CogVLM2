@@ -86,7 +86,8 @@ def collate_fn(features, tokenizer) -> dict:
 正式函数的接收一个PIL.Image对象作为输入，返回一个字符串，表示是否有半字符。
 '''
 def is_half_character(image):
-    query = '这张图片上有多少个数字的特征？'
+    # query = '这张图片上有多少个数字的特征？'
+    query = '这张图片上是数字几？'
     input_sample = model.build_conversation_input_ids(tokenizer, query=query, history=[], images=[image], template_version='chat')
     
     input_batch = collate_fn([input_sample], tokenizer)
@@ -99,6 +100,7 @@ def is_half_character(image):
         result = tokenizer.batch_decode(outputs)[0].strip()
 
     return result
+
 
 if __name__ == "__main__":
     # 测试代码，直接运行脚本时执行
