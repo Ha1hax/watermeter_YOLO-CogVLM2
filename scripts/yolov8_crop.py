@@ -44,7 +44,7 @@ def crop_and_save_objects(image_path, results, save_dir):
 
 if __name__ == '__main__':
     # 图片和保存目录
-    image_folder = '/home/zy/1.Code/new_water_meter_recognition/data/0-9_4-6'
+    image_folder = '/home/zy/1.Code/new_water_meter_recognition/data/yolo_error_cogvlm_correct'
     save_dir = '/home/zy/1.Code/new_water_meter_recognition/cropped_digits'
     
     # 初始化YOLOv8模型 (无需传递模型路径)
