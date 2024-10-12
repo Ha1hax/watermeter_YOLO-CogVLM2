@@ -9,7 +9,7 @@ project_root = os.path.dirname(current_dir)
 # 将项目根目录添加到sys.path
 sys.path.append(project_root)
 
-from utils.yolov8_utils import YOLOv8
+from utils.yolo_utils import YOLOv8
 
 def crop_and_save_objects(image_path, results, save_dir):
     """

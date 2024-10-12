@@ -1,3 +1,6 @@
+'''
+优化后处理组合读数的逻辑
+'''
 import os
 import sys
 import time
@@ -14,7 +17,7 @@ project_root = os.path.dirname(current_dir)
 # 将项目根目录添加到sys.path
 sys.path.append(project_root)
 
-from utils.yolov8_utils import YOLOV8
+from utils.yolo_utils import YOLOModel
 
 # 日志配置，日志保存在outputs文件夹中
 log_dir = os.path.join(project_root, 'outputs')
@@ -132,7 +135,7 @@ def recognize_water_meter(img_path):
     try:
         # 使用YOLOv8进行预测
         start2_time = time.time()
-        yolo = YOLOV8(model_type='s')
+        yolo = YOLOModel(model_version='v8')
         xyxy, cls, conf = yolo.predict(img)  # 获取预测的边框、类别和置信度
         logging.info(f"YOLOv8检测时间：{time.time() - start2_time}秒")
 

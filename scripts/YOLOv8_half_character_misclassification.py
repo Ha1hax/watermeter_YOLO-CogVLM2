@@ -1,3 +1,6 @@
+'''
+用于统计YOLOv8漏检半字符且置信度条不低
+'''
 import os
 import cv2
 import logging
@@ -11,7 +14,7 @@ project_root = os.path.dirname(current_dir)
 # 将项目根目录添加到sys.path
 sys.path.append(project_root)
 
-from utils.yolov8_utils import YOLOv8
+from utils.yolo_utils import YOLOModel
 from utils.cogvlm_inference import is_half_character
 
 # 配置日志
@@ -161,7 +164,7 @@ def process_folder(folder_path, yolo_model, save_dir, low_conf_threshold=0.9):
 
 if __name__ == "__main__":
     # 初始化 YOLOv8 模型
-    yolo_model = YOLOv8()  # 使用 YOLOv8 模型
+    yolo_model = YOLOModel()  # 使用 YOLOv8 模型
 
     # 输入图片文件夹路径
     folder_path = "/home/zy/1.Code/new_water_meter_recognition/data/0-9_4-6"  # 替换为你的图片文件夹路径

@@ -130,7 +130,7 @@ project_root = os.path.dirname(current_dir)
 sys.path.append(project_root)
 
 # 模型和设备配置
-MODEL_PATH = "/home/zy/1.Code/new_water_meter_recognition/models/cogvlm2-llama3-chinese-chat-19B-int4"
+MODEL_PATH = "/home/zy/.cache/modelscope/hub/ZhipuAI/cogvlm2-llama3-chinese-chat-19B-int4"
 TORCH_TYPE = torch.bfloat16
 device = 'cuda:0'
 

@@ -13,10 +13,10 @@ project_root = os.path.dirname(current_dir)
 # 将项目根目录添加到sys.path
 sys.path.append(project_root)
 
-from utils.yolov8_utils import YOLOV8
+from utils.yolo_utils import YOLOModel
 
 # 设置日志配置
-log_file = os.path.join(current_dir, "yolov8_confidence_analysis.log")
+log_file = os.path.join(current_dir, "yolov11n_confidence_analysis.log")
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -48,20 +48,26 @@ def recognize_water_meter(img_path):
         return None, None
     
     try:
-        yolo = YOLOV8(model_type='s')
-        results = yolo.predict(img)
-        logging.info(f"YOLOv8预测结果返回数量: {len(results)}")
+        yolo = YOLOModel(model_version='v11')
+        results = yolo.predict(img_path)
+        logging.info(f"YOLO预测结果返回数量: {len(results)}")
         
-        if len(results) == 3:
-            xyxy, cls, confs = results
-            logging.info(f"边界框数量: {len(xyxy)}, 类别数量: {len(cls)}, 置信度分数数量: {len(confs)}")
-            confs = confs.cpu().numpy()  # 将置信度分数从 GPU 移动到 CPU 并转换为 NumPy 数组
-            cls = cls.cpu().numpy()  # 将类别标签也移动到 CPU 并转换为 NumPy 数组
-        else:
-            logging.error(f"YOLOv8返回的结果长度不匹配: {len(results)}")
-            return None, None
+        # if len(results) == 3:
+        # xyxy, cls, confs = results
+
+         # 提取 YOLO 推理结果（根据 YOLO 的实际输出格式进行调整）
+        xyxy = results[0].boxes.xyxy  # 获取检测框坐标
+        cls = results[0].boxes.cls  # 获取类别
+        confs = results[0].boxes.conf  # 获取置信度
+
+        logging.info(f"边界框数量: {len(xyxy)}, 类别数量: {len(cls)}, 置信度分数数量: {len(confs)}")
+        confs = confs.cpu().numpy()  # 将置信度分数从 GPU 移动到 CPU 并转换为 NumPy 数组
+        cls = cls.cpu().numpy()  # 将类别标签也移动到 CPU 并转换为 NumPy 数组
+        # else:
+        #     logging.error(f"YOLO返回的结果长度不匹配: {len(results)}")
+        #     return None, None
     except Exception as e:
-        logging.error(f"YOLOv8检测数字框时发生异常: {e}")
+        logging.error(f"YOLO检测数字框时发生异常: {e}")
         return None, None
 
     try:
@@ -111,7 +117,7 @@ def analyze_confidence_distribution(folder_path):
         logging.info(f"总置信度数据量: {len(all_confidences)}")
         plt.figure(figsize=(10, 6))
         plt.hist(all_confidences, bins=20, color='blue', edgecolor='black', alpha=0.7)
-        plt.title('Overall YOLOv8 Confidence Score Distribution')
+        plt.title('Overall YOLO Confidence Score Distribution')
         plt.xlabel('Confidence Score')
         plt.ylabel('Frequency')
         plt.grid(True)
@@ -123,7 +129,7 @@ def analyze_confidence_distribution(folder_path):
         if confs:
             plt.figure(figsize=(10, 6))
             plt.hist(confs, bins=20, color='green', edgecolor='black', alpha=0.7)
-            plt.title(f'YOLOv8 Confidence Score Distribution for Class {cls}')
+            plt.title(f'YOLO Confidence Score Distribution for Class {cls}')
             plt.xlabel('Confidence Score')
             plt.ylabel('Frequency')
             plt.grid(True)
@@ -137,5 +143,5 @@ def analyze_confidence_distribution(folder_path):
     logging.info(f"置信度 < 0.7: {confidence_zones['low']} 次")
 
 if __name__ == "__main__":
-    folder_path = "/home/zy/1.Code/new_water_meter_recognition/data/test_halfword"  # 替换为你存放254张图片的文件夹路径
+    folder_path = "/home/zy/0.Data/water-try/spilt/val/images"  
     analyze_confidence_distribution(folder_path)

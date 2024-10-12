@@ -21,7 +21,7 @@ project_root = os.path.dirname(current_dir)
 # 将项目根目录添加到sys.path
 sys.path.append(project_root)
 
-from utils.yolov8_utils import YOLOV8
+from utils.yolo_utils import YOLOModel
 
 
 logging.basicConfig(filename='test_yolov8_inference.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -30,7 +30,7 @@ logging.basicConfig(filename='test_yolov8_inference.log', level=logging.INFO, fo
 class DigitalPredictor_Yolov8():
     def __init__(self, model=0):
         self.model = model
-        self.yolo_predicter = YOLOV8(model_type='s')
+        self.yolo_predicter = YOLOModel(model_version='v8')
     
     def call(self, img_path):
         logging.info(f"推理图片: {os.path.basename(img_path)}")
