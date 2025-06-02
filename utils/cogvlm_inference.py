@@ -275,7 +275,7 @@ def is_half_character(image):
 
 if __name__ == "__main__":
     # 测试代码，直接运行脚本时执行
-    test_image_path = '/home/zy/1.Code/new_water_meter_recognition/cropped_digits/00040_object_0_4.jpg'
+    test_image_path = '/home/zy/1.Code/watermeter_YOLO-CogVLM2/clsdata/condition1/test/0.5/911004002311_20240506_202_10.jpg'
     
     # 将图像路径转换为 PIL.Image 对象
     image = Image.open(test_image_path).convert('RGB')
