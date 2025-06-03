@@ -66,7 +66,8 @@ class Detector:
 
         if self.model_version.startswith('yolo'):
             # 使用 YOLO 模型推理
-            results = self.model.predict(image_path, conf=conf_thres)
+            # results = self.model.predict(image_path, conf=conf_thres)
+            results = self.model(image_path, device=self.device, agnostic_nms=True, conf=conf_thres)
             r = results[0]  # 只处理一张图片
 
             # 从结果中提取检测框、置信度、类别
